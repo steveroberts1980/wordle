@@ -1,0 +1,55 @@
+div.content {
+    margin-left: 40%;
+}
+
+.mat-cell {
+    width: 40px;
+    padding: 5px;
+}
+
+.mat-cell input {
+    width: 28px;
+    font-size: x-large;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mat-cell input.white {
+    background-color: white;
+}
+
+.mat-cell input.green {
+    background-color: green;
+}
+
+.mat-cell input.yellow {
+    background-color: yellow;
+}
+
+.mat-cell input.gray {
+    background-color: lightgray;
+}
+
+.pageArea {
+    padding-left: 10px;
+    padding-top: 20px;
+    width: 290px;
+}
+
+.scrollable {
+    overflow-y: auto;
+    font-size: large;
+    float: left;
+    height: 200px;
+    width: 100%;
+}
+
+.left {
+    width: 50%;
+    float: left;
+}
+
+.right {
+    margin-left: 50%;
+    text-align: right;
+}

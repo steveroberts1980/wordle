@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { flatMap } from 'rxjs';
 
 export class Letter {
   letter: string = '';
@@ -71,85 +70,65 @@ export class AppComponent {
 
   findWords() {
     this.possibleMatches = [];
+    var filteredList: string[] = [];
+
+    // Load the initial list
+    this.wordList.forEach(element => {
+      this.possibleMatches.push(element);
+    });
+
     var badLetters: string = '';
     var goodLetters: string = '';
     var knownPositionLetters: string = '*****';
 
-    for (var i: number = 0; i < 6; i++) {
-      for (var j: number = 0; j < 5; j++) {
+    for (var i: number = 0; i < 6; i++) { // Run through list of words
+      
+      for (var j: number = 0; j < 5; j++) { // Now through the list of letters for the word
         const w: Letter = this.wordleData[i][j];
 
         if (w.letter != '') {
           w.letter = w.letter.toLowerCase();
 
-          // w.state == 0 is NOT IN THE WORD
-          if (w.state == 0) {
-            badLetters += w.letter;
-          } else if (w.state == 1) {
-            // Right letter, wrong place.
-            goodLetters += w.letter;
-          } else {
-            // Right letter, right place.
-            goodLetters += w.letter;
+          this.possibleMatches.forEach(word => {
+              var isPossibleMatch: boolean = true;
 
-            var n = "";
+              // Don't remove the word if the letter is an ok letter but there is more than one 
+              // instance of the letter
+              if (w.state == 0) { 
+                if (word.indexOf(w.letter) > -1) {
+                  isPossibleMatch = false;
+                }
+              } else if (w.state == 1) { // Right letter, wrong place.
+                if (goodLetters.indexOf(w.letter) == -1) {
+                  goodLetters += w.letter;
+                }
 
-            for (var k: number = 0; k < 5; k++) {
-              if (k==j) {
-                n+= w.letter;
+                if (word.indexOf(w.letter) == j || word.indexOf(w.letter) == -1) {
+                  isPossibleMatch = false;
+                }
               } else {
-                n += knownPositionLetters[k];
+                // Right letter, right place.
+                if (goodLetters.indexOf(w.letter) == -1) {
+                  goodLetters += w.letter;
+                }
+
+                if (word.indexOf(w.letter) != j) {
+                  isPossibleMatch = false;
+                }
               }
-            }
 
-            knownPositionLetters = n;
-          }
+              if (isPossibleMatch)
+                filteredList.push(word);
+          });
+
+            this.possibleMatches = [];
+            filteredList.forEach(word => {
+              this.possibleMatches.push(word);
+            })
+            filteredList = [];
         }
       }
     }
-
-    for (var i: number = 0; i < goodLetters.length; i++) {
-      badLetters = badLetters.replace(goodLetters[i], '');
-    }
-
-    for (var i: number = 0; i < 5; i++) {
-      badLetters = badLetters.replace(knownPositionLetters[i], '');
-    }
-
-    this.wordList.forEach(w => {
-      var isPossibleMatch: boolean = true;
-
-      // First remove any words that contain invalid letters
-      for (var i: number = 0; i < badLetters.length; i++) {
-        if (w.indexOf(badLetters[i]) > -1) {
-          isPossibleMatch = false;
-          break;
-        }
-      }
-
-      // Now remove any words that don't contain a valid letter
-      for (var i: number = 0; i < goodLetters.length; i++) {
-        if (w.indexOf(goodLetters[i]) == -1) {
-          isPossibleMatch = false;
-          break;
-        }
-      }
-
-      // Now remove any words that don't contain a valid letter in the right position
-      for (var i: number = 0; i < knownPositionLetters.length; i++) {
-        if (knownPositionLetters[i] != '*') {
-          if (w.charAt(i) != knownPositionLetters[i]) {
-            isPossibleMatch = false;
-
-            break;
-          }
-        }
-      }
-
-      if (isPossibleMatch) {
-        this.possibleMatches.push(w);
-      }
-    });
   }
 
   clear() {
@@ -163,9 +142,4 @@ export class AppComponent {
       }
     }
   }
-
-  tabnext(e: any) {
-
-  }
-
 }

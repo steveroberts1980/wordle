@@ -1,6 +1,13 @@
 import { Component, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 
+// Need to test the following
+// bl(o)ck
+// m(o)p[e]y
+// [o]ff[e]r
+// [o]a[s][e]s
+// onset <- word
+
 export class Letter {
   letter: string = '';
   state: number = 0;

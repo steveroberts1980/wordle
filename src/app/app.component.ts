@@ -102,6 +102,13 @@ export class AppComponent {
       for (var j: number = 0; j < 5; j++) { // Now through the list of letters for the word
         const w: Letter = this.wordleData[i][j];
 
+        var okLetters: string ='';
+        for (var k: number =0; k < 5; k++) {
+          if (this.wordleData[i][k].state > 0) {
+            okLetters += w.letter;
+          }
+        }
+
         if (w.letter != '') {
           w.letter = w.letter.toLowerCase();
 
@@ -111,7 +118,7 @@ export class AppComponent {
               // Don't remove the word if the letter is an ok letter but there is more than one 
               // instance of the letter
               if (w.state == 0) { 
-                if (word.indexOf(w.letter) > -1) {
+                if (word.indexOf(w.letter) > -1 && okLetters.indexOf(w.letter) == -1) {
                   isPossibleMatch = false;
                 }
               } else if (w.state == 1) { // Right letter, wrong place.

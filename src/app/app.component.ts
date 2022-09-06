@@ -8,6 +8,15 @@ import { HttpClient } from '@angular/common/http'
 // [o]a[s][e]s
 // onset <- word
 
+// Next to fix
+// paus(e)
+// bl[0]ck
+// thin(g)
+// dwarf
+// brac(e)
+// br[o]ad
+// gooey <- word
+
 export class Letter {
   letter: string = '';
   state: number = 0;

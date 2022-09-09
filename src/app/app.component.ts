@@ -17,6 +17,12 @@ import { HttpClient } from '@angular/common/http'
 // br[o]ad
 // gooey <- word
 
+// Text Case
+// paus[e]
+// [t]wic[e]
+// [t][h]r(e)[e]
+// theme <- word
+
 export class Letter {
   letter: string = '';
   state: number = 0;

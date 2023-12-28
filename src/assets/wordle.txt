@@ -445,7 +445,6 @@ whoop
 taunt
 leery
 class
-theme
 lofty
 tibia
 booze
@@ -13291,6 +13290,7 @@ theic
 thein
 thelf
 thema
+theme
 thens
 theor
 theow

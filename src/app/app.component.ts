@@ -1,27 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-
-// Need to test the following
-// bl(o)ck
-// m(o)p[e]y
-// [o]ff[e]r
-// [o]a[s][e]s
-// onset <- word
-
-// Next to fix
-// paus(e)
-// bl[0]ck
-// thin(g)
-// dwarf
-// brac(e)
-// br[o]ad
-// gooey <- word
-
-// Text Case
-// paus[e]
-// [t]wic[e]
-// [t][h]r(e)[e]
-// theme <- word
+import { filter } from 'rxjs';
 
 export class Letter {
   letter: string = '';
@@ -75,8 +54,41 @@ export class AppComponent {
     this.clear();
   }
 
-  focusNext(id: number) {
-    document.getElementById((id+1).toString())?.focus();
+  handleBackspace(event: KeyboardEvent, id: number) {
+    if (event.key.toLowerCase() == "backspace") {
+      let el : HTMLInputElement = <HTMLInputElement> document.getElementById(id.toString())!;
+
+      // First backspace should clear the field. 2nd time should go to the previous field.
+      if (el .value != "") {
+        el.value = ""
+      } else if (id > 0) {
+        document.getElementById((id-1).toString())?.focus();
+      }
+
+      event.preventDefault();
+    }
+  }
+
+  focusNext(event: KeyboardEvent, id: number) {
+    if (event.keyCode >= 65 && event.keyCode <= 90) {
+      document.getElementById((id+1).toString())?.focus();
+    } else if(event.key.toLowerCase() == "backspace") {
+      return;
+    } else if (!this.isLetter(document.getElementById(id.toString())?.innerText)) {
+      let el : HTMLInputElement = <HTMLInputElement> document.getElementById(id.toString())!;
+
+      if (el !== undefined) {
+        el.value = ""
+      }
+    }
+  }
+
+  isLetter(char: string | undefined) {
+    if (char !== undefined) {
+      return (/[a-zA-Z]/).test(char);
+    }
+
+    return false;
   }
 
   loadWordList() {
@@ -111,7 +123,7 @@ export class AppComponent {
         var okLetters: string ='';
         for (var k: number =0; k < 5; k++) {
           if (this.wordleData[i][k].state > 0) {
-            okLetters += w.letter;
+            okLetters += this.wordleData[i][k].letter;
           }
         }
 
@@ -141,7 +153,7 @@ export class AppComponent {
                   goodLetters += w.letter;
                 }
 
-                if (word.indexOf(w.letter) != j) {
+                if (word[j] != w.letter) {
                   isPossibleMatch = false;
                 }
               }

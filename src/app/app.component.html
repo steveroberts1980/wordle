@@ -7,27 +7,27 @@
     <table mat-table [dataSource]="wordleData" class="mat-elevation-z8">
       <ng-container matColumnDef="0">
         <td mat-cell *matCellDef="let element">
-          <input type="text" [id]="element[0].id" class="letter" [className]="element[0].background" (keyup)="focusNext(element[0].id)" maxlength="1" [(ngModel)]="element[0].letter" (contextmenu)="element[0].updateState(); $event.preventDefault();" />
+          <input type="text" [id]="element[0].id" class="letter" [className]="element[0].background" (keydown)="handleBackspace($event, element[0].id)" (keyup)="focusNext($event, element[0].id)" maxlength="1" [(ngModel)]="element[0].letter" (contextmenu)="element[0].updateState(); $event.preventDefault();" />
         </td>
       </ng-container>
       <ng-container matColumnDef="1">
         <td mat-cell *matCellDef="let element">
-          <input type="text" [id]="element[1].id" class="letter" [className]="element[1].background" (keyup)="focusNext(element[1].id)" maxlength="1" [(ngModel)]="element[1].letter" (contextmenu)="element[1].updateState(); $event.preventDefault();" />
+          <input type="text" [id]="element[1].id" class="letter" [className]="element[1].background" (keydown)="handleBackspace($event, element[1].id)" (keyup)="focusNext($event, element[1].id)" maxlength="1" [(ngModel)]="element[1].letter" (contextmenu)="element[1].updateState(); $event.preventDefault();" />
         </td>
       </ng-container>
       <ng-container matColumnDef="2">
         <td mat-cell *matCellDef="let element">
-          <input type="text" [id]="element[2].id" class="letter" [className]="element[2].background" (keyup)="focusNext(element[2].id)" maxlength="1" [(ngModel)]="element[2].letter" (contextmenu)="element[2].updateState(); $event.preventDefault();" />
+          <input type="text" [id]="element[2].id" class="letter" [className]="element[2].background" (keydown)="handleBackspace($event, element[2].id)" (keyup)="focusNext($event, element[2].id)" maxlength="1" [(ngModel)]="element[2].letter" (contextmenu)="element[2].updateState(); $event.preventDefault();" />
         </td>
       </ng-container>
       <ng-container matColumnDef="3">
         <td mat-cell *matCellDef="let element">
-          <input type="text" [id]="element[3].id" class="letter" [className]="element[3].background" (keyup)="focusNext(element[3].id)" maxlength="1" [(ngModel)]="element[3].letter" (contextmenu)="element[3].updateState(); $event.preventDefault();" />
+          <input type="text" [id]="element[3].id" class="letter" [className]="element[3].background" (keydown)="handleBackspace($event, element[3].id)" (keyup)="focusNext($event, element[3].id)" maxlength="1" [(ngModel)]="element[3].letter" (contextmenu)="element[3].updateState(); $event.preventDefault();" />
         </td>
       </ng-container>
       <ng-container matColumnDef="4">
         <td mat-cell *matCellDef="let element">
-          <input type="text" [id]="element[4].id" class="letter" [className]="element[4].background" (keyup)="focusNext(element[4].id)" maxlength="1" [(ngModel)]="element[4].letter" (contextmenu)="element[4].updateState(); $event.preventDefault();" />
+          <input type="text" [id]="element[4].id" class="letter" [className]="element[4].background" (keydown)="handleBackspace($event, element[4].id)" (keyup)="focusNext($event, element[4].id)" maxlength="1" [(ngModel)]="element[4].letter" (contextmenu)="element[4].updateState(); $event.preventDefault();" />
         </td>
       </ng-container>
 
@@ -37,7 +37,7 @@
 
   <div class="pageArea">
     <div class="left">
-      <button mat-raised-button color="primary" (click)="clear()">Clear</button>
+      <button mat-raised-button color="primary" (click)="clear()">Clear All</button>
     </div>
     <div class="right">
       <button mat-raised-button color="accent" (click)="findWords()">Find Words</button>
